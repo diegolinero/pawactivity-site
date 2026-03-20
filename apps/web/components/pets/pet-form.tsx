@@ -31,7 +31,7 @@ export function PetForm({ action, submitLabel, defaultValues }: PetFormProps) {
       weightKg: defaultValues?.weightKg ?? '',
       sex: defaultValues?.sex ?? 'unknown',
       photoUrl: defaultValues?.photoUrl ?? '',
-    },
+    } satisfies Partial<PetFormType>,
   });
 
   const onSubmit = handleSubmit(async (values) => {
