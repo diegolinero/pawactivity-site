@@ -1,16 +1,20 @@
 'use client';
 
 import { zodResolver } from '@hookform/resolvers/zod';
-import { deviceAssignmentSchema, type DeviceAssignmentInput } from '@pawactivity/validation';
+import { deviceAssignmentSchema } from '@pawactivity/validation';
 import type { DeviceSummary } from '@pawactivity/types';
 import { useForm } from 'react-hook-form';
 import { useState } from 'react';
+import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 
 export function DeviceAssignmentForm({ petId, devices }: { petId: string; devices: DeviceSummary[] }) {
   const [formError, setFormError] = useState<string | null>(null);
-  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<DeviceAssignmentInput>({
+  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<z.input<typeof deviceAssignmentSchema>, unknown, z.output<typeof deviceAssignmentSchema>>({
     resolver: zodResolver(deviceAssignmentSchema),
+    defaultValues: {
+      deviceId: '',
+    },
   });
 
   const onSubmit = handleSubmit(async (values) => {
