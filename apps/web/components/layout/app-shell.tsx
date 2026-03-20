@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import { ReactNode } from 'react';
+import type { ReactNode } from 'react';
 
 export function AppShell({ children }: { children: ReactNode }) {
   return (
@@ -11,6 +11,8 @@ export function AppShell({ children }: { children: ReactNode }) {
           </Link>
           <nav className="flex items-center gap-4 text-sm text-slate-600">
             <Link href="/dashboard">Dashboard</Link>
+            <Link href="/pets">Mascotas</Link>
+            <Link href="/devices">Dispositivos</Link>
           </nav>
         </div>
       </header>

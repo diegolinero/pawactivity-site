@@ -1,10 +1,11 @@
 import { env } from './config';
 
-export async function apiFetch<T>(path: string, init?: RequestInit): Promise<T> {
+export async function apiFetch<T>(path: string, init?: RequestInit, accessToken?: string): Promise<T> {
   const response = await fetch(`${env.apiUrl}${path}`, {
     ...init,
     headers: {
       'Content-Type': 'application/json',
+      ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
       ...(init?.headers ?? {}),
     },
     cache: 'no-store',
