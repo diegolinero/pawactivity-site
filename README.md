@@ -124,6 +124,9 @@ pnpm dev
 - `GET /v1/devices/:deviceId/status`
 - `POST /v1/pets/:petId/devices/assign`
 
+### Activity Sync
+- `POST /v1/activity/sync`
+
 ## Pantallas implementadas
 
 - `/login`
@@ -143,6 +146,7 @@ pnpm dev
 4. Puede activar un dispositivo por serial.
 5. Puede asignar un dispositivo a una mascota desde el detalle de esa mascota.
 6. Puede ver el estado básico del dispositivo asociado.
+7. La app móvil ya puede enviar lotes de actividad al backend para almacenarlos y resumirlos por día.
 
 ## Decisión UX de esta fase
 
@@ -150,8 +154,7 @@ La asignación de dispositivo se hace desde la pantalla de detalle de la mascota
 
 ## Qué falta para la siguiente fase
 
-- sincronización de actividad desde la app móvil
-- modelo y endpoints de eventos de actividad
+- endpoints de lectura de actividad para web privada
 - timeline o métricas simples por mascota
-- estado de última sincronización
-- batería y `last_seen_at` alimentados por datos reales
+- vistas de resumen diario/semanal/mensual
+- dashboard con consumo real de resúmenes diarios
