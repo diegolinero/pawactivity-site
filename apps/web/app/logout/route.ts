@@ -2,7 +2,7 @@ import { NextResponse } from 'next/server';
 import { apiFetch } from '@/lib/api';
 import { clearSessionCookies, getRefreshToken } from '@/lib/session';
 
-export async function POST() {
+export async function POST(request: Request) {
   try {
     const refreshToken = await getRefreshToken();
     if (refreshToken) {
@@ -16,5 +16,5 @@ export async function POST() {
   }
 
   await clearSessionCookies();
-  return NextResponse.redirect(new URL('/login', 'http://localhost:3000'));
+  return NextResponse.redirect(new URL('/login', request.url));
 }

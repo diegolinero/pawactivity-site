@@ -202,3 +202,12 @@ La asignación de dispositivo se hace desde la pantalla de detalle de la mascota
 
 - `docs/android-api-integration.md`
 - `docs/mobile-sync-contract.md`
+
+## Documentación de deployment y staging
+
+- `docs/deployment-plan.md`
+- `docs/staging-setup.md`
+
+## Documentación de producción
+
+- `docs/production-release.md`

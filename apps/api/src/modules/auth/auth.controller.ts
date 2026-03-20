@@ -1,6 +1,8 @@
 import { Body, Controller, Get, Headers, Ip, Post, UseGuards } from '@nestjs/common';
 import { CurrentUser } from '../../common/decorators/current-user.decorator';
+import { RateLimit } from '../../common/decorators/rate-limit.decorator';
 import { JwtAuthGuard } from '../../common/guards/jwt-auth.guard';
+import { RateLimitGuard } from '../../common/guards/rate-limit.guard';
 import { AuthService } from './auth.service';
 import { LoginDto } from './dto/login.dto';
 import { LogoutDto } from './dto/logout.dto';
@@ -12,6 +14,8 @@ export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
   @Post('register')
+  @UseGuards(RateLimitGuard)
+  @RateLimit({ keyPrefix: 'auth-register', limit: 5, windowMs: 60_000, scope: 'ip' })
   register(
     @Body() body: RegisterDto,
     @Headers('user-agent') userAgent?: string,
@@ -22,6 +26,8 @@ export class AuthController {
   }
 
   @Post('login')
+  @UseGuards(RateLimitGuard)
+  @RateLimit({ keyPrefix: 'auth-login', limit: 10, windowMs: 60_000, scope: 'ip' })
   login(
     @Body() body: LoginDto,
     @Headers('user-agent') userAgent?: string,
@@ -32,6 +38,8 @@ export class AuthController {
   }
 
   @Post('refresh')
+  @UseGuards(RateLimitGuard)
+  @RateLimit({ keyPrefix: 'auth-refresh', limit: 20, windowMs: 60_000, scope: 'ip' })
   refresh(
     @Body() body: RefreshDto,
     @Headers('user-agent') userAgent?: string,

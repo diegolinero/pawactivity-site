@@ -6,6 +6,7 @@ import { PetsModule } from './modules/pets/pets.module';
 import { DevicesModule } from './modules/devices/devices.module';
 import { ActivityModule } from './modules/activity/activity.module';
 import { SyncModule } from './modules/sync/sync.module';
+import { HealthModule } from './modules/health/health.module';
 import { PrismaModule } from './prisma/prisma.module';
 
 @Module({
@@ -18,6 +19,7 @@ import { PrismaModule } from './prisma/prisma.module';
     DevicesModule,
     ActivityModule,
     SyncModule,
+    HealthModule,
   ],
 })
 export class AppModule {}

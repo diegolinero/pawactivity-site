@@ -1,4 +1,4 @@
-import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common';
+import { BadRequestException, ForbiddenException, Injectable, Logger, UnauthorizedException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
 import * as argon2 from 'argon2';
@@ -8,6 +8,8 @@ import { LoginDto } from './dto/login.dto';
 
 @Injectable()
 export class AuthService {
+  private readonly logger = new Logger(AuthService.name);
+
   constructor(
     private readonly prisma: PrismaService,
     private readonly jwtService: JwtService,
@@ -15,6 +17,7 @@ export class AuthService {
   ) {}
 
   async register(input: RegisterDto, meta: RequestMeta) {
+    this.assertRegistrationAllowed(input.email);
     const existingUser = await this.prisma.user.findUnique({ where: { email: input.email } });
     if (existingUser) {
       throw new BadRequestException('Email already in use');
@@ -31,17 +34,21 @@ export class AuthService {
       },
     });
 
-    return this.createSession(user.id, user.email, meta, true);
+    const session = await this.createSession(user.id, user.email, meta, true);
+    this.logger.log(JSON.stringify({ event: 'auth_register_success', userId: user.id, email: user.email }));
+    return session;
   }
 
   async login(input: LoginDto, meta: RequestMeta) {
     const user = await this.prisma.user.findUnique({ where: { email: input.email } });
     if (!user) {
+      this.logger.warn(JSON.stringify({ event: 'auth_login_failed', email: input.email, reason: 'user_not_found' }));
       throw new UnauthorizedException('Invalid credentials');
     }
 
     const validPassword = await argon2.verify(user.passwordHash, input.password);
     if (!validPassword) {
+      this.logger.warn(JSON.stringify({ event: 'auth_login_failed', email: input.email, reason: 'invalid_password', userId: user.id }));
       throw new UnauthorizedException('Invalid credentials');
     }
 
@@ -50,7 +57,9 @@ export class AuthService {
       data: { lastLoginAt: new Date() },
     });
 
-    return this.createSession(user.id, user.email, meta);
+    const session = await this.createSession(user.id, user.email, meta);
+    this.logger.log(JSON.stringify({ event: 'auth_login_success', userId: user.id, email: user.email }));
+    return session;
   }
 
   async refresh(refreshToken: string, meta: RequestMeta) {
@@ -58,11 +67,13 @@ export class AuthService {
     const session = await this.prisma.authSession.findUnique({ where: { id: payload.sessionId } });
 
     if (!session || session.revokedAt || session.expiresAt < new Date()) {
+      this.logger.warn(JSON.stringify({ event: 'auth_refresh_failed', sessionId: payload.sessionId, reason: 'session_invalid' }));
       throw new UnauthorizedException('Session is not valid');
     }
 
     const validToken = await argon2.verify(session.refreshTokenHash, refreshToken);
     if (!validToken) {
+      this.logger.warn(JSON.stringify({ event: 'auth_refresh_failed', sessionId: payload.sessionId, reason: 'token_hash_mismatch' }));
       throw new UnauthorizedException('Session is not valid');
     }
 
@@ -71,7 +82,9 @@ export class AuthService {
       data: { revokedAt: new Date() },
     });
 
-    return this.createSession(session.userId, payload.email, meta);
+    const nextSession = await this.createSession(session.userId, payload.email, meta);
+    this.logger.log(JSON.stringify({ event: 'auth_refresh_success', userId: session.userId, previousSessionId: session.id, nextSessionId: nextSession.session.sessionId }));
+    return nextSession;
   }
 
   async logout(refreshToken: string) {
@@ -81,6 +94,7 @@ export class AuthService {
       data: { revokedAt: new Date() },
     });
 
+    this.logger.log(JSON.stringify({ event: 'auth_logout', userId: payload.sub, sessionId: payload.sessionId }));
     return { success: true };
   }
 
@@ -175,6 +189,22 @@ export class AuthService {
       return payload;
     } catch {
       throw new UnauthorizedException('Invalid refresh token');
+    }
+  }
+
+  private assertRegistrationAllowed(email: string) {
+    const allowPublicRegistration = (this.configService.get<string>('ALLOW_PUBLIC_REGISTRATION') ?? 'true').toLowerCase() === 'true';
+    if (allowPublicRegistration) {
+      return;
+    }
+
+    const allowlist = (this.configService.get<string>('REGISTRATION_EMAIL_ALLOWLIST') ?? '')
+      .split(',')
+      .map((value) => value.trim().toLowerCase())
+      .filter(Boolean);
+
+    if (!allowlist.includes(email.toLowerCase())) {
+      throw new ForbiddenException('Registration is currently limited');
     }
   }
 

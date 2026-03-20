@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { AuthService } from '../src/modules/auth/auth.service';
 
-function createAuthService() {
+function createAuthService(options?: { allowPublicRegistration?: string; registrationAllowlist?: string }) {
   const sessions: any[] = [];
   const users: any[] = [];
 
@@ -44,7 +44,14 @@ function createAuthService() {
     verifyAsync: async (token: string) => JSON.parse(token),
   } as any;
 
-  const config = { get: (key: string) => ({ JWT_REFRESH_EXPIRES_IN: '7d', JWT_ACCESS_EXPIRES_IN: '15m' } as Record<string, string>)[key] } as any;
+  const config = {
+    get: (key: string) => ({
+      JWT_REFRESH_EXPIRES_IN: '7d',
+      JWT_ACCESS_EXPIRES_IN: '15m',
+      ALLOW_PUBLIC_REGISTRATION: options?.allowPublicRegistration ?? 'true',
+      REGISTRATION_EMAIL_ALLOWLIST: options?.registrationAllowlist ?? '',
+    } as Record<string, string>)[key],
+  } as any;
 
   const service = new AuthService(prisma, jwt, config);
   return { service, sessions, users };
@@ -69,4 +76,18 @@ test('register/login/me/logout flow keeps session state consistent', async () =>
 
   await service.logout(logged.refreshToken);
   assert.notEqual(sessions[1].revokedAt, null);
+});
+
+test('register can be limited to an allowlist for controlled releases', async () => {
+  const { service } = createAuthService({
+    allowPublicRegistration: 'false',
+    registrationAllowlist: 'allowed@pawactivity.com',
+  });
+
+  await assert.rejects(() =>
+    service.register({ email: 'blocked@pawactivity.com', password: 'password123', firstName: 'Blocked' } as any, {}),
+  );
+
+  const allowed = await service.register({ email: 'allowed@pawactivity.com', password: 'password123', firstName: 'Allowed' } as any, {});
+  assert.equal(allowed.user.email, 'allowed@pawactivity.com');
 });

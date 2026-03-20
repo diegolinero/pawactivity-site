@@ -1,4 +1,4 @@
-import { BadRequestException, ForbiddenException, Injectable } from '@nestjs/common';
+import { BadRequestException, ForbiddenException, Injectable, Logger } from '@nestjs/common';
 import { ActivityType, Prisma } from '@prisma/client';
 import { PrismaService } from '../../prisma/prisma.service';
 import { PetsService } from '../pets/pets.service';
@@ -7,6 +7,8 @@ import { SyncActivityDto } from './dto/sync-activity.dto';
 
 @Injectable()
 export class SyncService {
+  private readonly logger = new Logger(SyncService.name);
+
   constructor(
     private readonly prisma: PrismaService,
     private readonly petsService: PetsService,
@@ -14,6 +16,16 @@ export class SyncService {
   ) {}
 
   async syncActivity(userId: string, dto: SyncActivityDto) {
+    this.logger.log(JSON.stringify({
+      event: 'activity_sync_received',
+      userId,
+      petId: dto.petId,
+      deviceId: dto.deviceId,
+      recordsReceived: dto.events.length,
+      generatedAt: dto.generatedAt,
+      timezone: dto.timezone,
+    }));
+
     await this.petsService.ensureOwnership(userId, dto.petId);
     await this.devicesService.getById(userId, dto.deviceId);
 
@@ -111,7 +123,7 @@ export class SyncService {
       return { log, storedEvents: createResult.count };
     });
 
-    return {
+    const response = {
       success: true,
       syncLogId: result.log.id,
       recordsReceived: events.length,
@@ -120,6 +132,20 @@ export class SyncService {
       syncedAt: result.log.syncedAt.toISOString(),
       updatedDates: affectedDates,
     };
+
+    this.logger.log(JSON.stringify({
+      event: 'activity_sync_success',
+      userId,
+      petId: dto.petId,
+      deviceId: dto.deviceId,
+      syncLogId: response.syncLogId,
+      recordsReceived: response.recordsReceived,
+      storedEvents: response.storedEvents,
+      skippedDuplicates: response.skippedDuplicates,
+      updatedDates: response.updatedDates,
+    }));
+
+    return response;
   }
 
   private normalizeEvent(event: SyncActivityDto['events'][number]) {
