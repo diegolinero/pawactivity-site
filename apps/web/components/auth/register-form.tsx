@@ -8,10 +8,12 @@ import { z } from 'zod';
 import { Button } from '@/components/ui/button';
 import { registerSchema } from '@pawactivity/validation';
 
+type RegisterFormType = z.infer<typeof registerSchema>;
+
 export function RegisterForm() {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
-  const { register, handleSubmit, formState: { errors } } = useForm<z.input<typeof registerSchema>, unknown, z.output<typeof registerSchema>>({
+  const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: zodResolver(registerSchema),
     defaultValues: {
       email: '',
@@ -19,7 +21,7 @@ export function RegisterForm() {
       firstName: '',
       lastName: '',
       timezone: 'UTC',
-    },
+    } satisfies RegisterFormType,
   });
 
   const onSubmit = handleSubmit(async (values) => {
