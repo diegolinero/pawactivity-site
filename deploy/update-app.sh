@@ -2,37 +2,33 @@
 set -Eeuo pipefail
 
 APP_DIR="/var/www/pawactivity"
+BRANCH="${1:-main}"
 
 echo "=== PawActivity Deploy ==="
-
 cd "$APP_DIR"
 
-echo "→ Pull latest code"
+echo "→ Sync branch: $BRANCH"
 git fetch origin
-git reset --hard origin/main
+git checkout "$BRANCH"
+git reset --hard "origin/$BRANCH"
 
 echo "→ Install dependencies"
-pnpm install --frozen-lockfile || pnpm install
-
-echo "→ Build project (Turbo)"
-pnpm build
+pnpm install --frozen-lockfile
 
 echo "→ Generate Prisma client"
 pnpm db:generate
 
-echo "→ Run migrations"
+echo "→ Build monorepo"
+pnpm build
+
+echo "→ Run production migrations"
 pnpm db:migrate:deploy
 
 echo "→ Restart PM2"
-pm2 restart all
-
-echo "→ Save PM2 state"
+pm2 start ecosystem.config.js --update-env || pm2 restart all --update-env
 pm2 save
 
-echo "→ Healthcheck"
-sleep 3
-
-curl -f http://localhost:4000/v1 || (echo "API failed" && exit 1)
-curl -f http://localhost:3000 || (echo "WEB failed" && exit 1)
+echo "→ Local healthcheck"
+bash deploy/healthcheck.sh
 
 echo "=== Deploy OK ==="
