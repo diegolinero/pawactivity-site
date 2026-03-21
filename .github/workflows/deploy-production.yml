@@ -3,13 +3,35 @@ name: Deploy Production
 on:
   workflow_dispatch:
 
+concurrency:
+  group: pawactivity-production
+  cancel-in-progress: false
+
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    timeout-minutes: 20
 
     steps:
-      - name: Checkout
+      - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Test workflow
-        run: echo "Workflow funcionando 🚀"
+      - name: Start SSH agent
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.PROD_SSH_PRIVATE_KEY }}
+
+      - name: Add server to known_hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -p "${{ secrets.PROD_SSH_PORT }}" -H "${{ secrets.PROD_HOST }}" >> ~/.ssh/known_hosts
+
+      - name: Run remote deploy
+        run: |
+          ssh -p "${{ secrets.PROD_SSH_PORT }}" "${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }}" \
+            "cd /var/www/pawactivity && bash deploy/update-app.sh main"
+
+      - name: Remote post-deploy status
+        run: |
+          ssh -p "${{ secrets.PROD_SSH_PORT }}" "${{ secrets.PROD_USER }}@${{ secrets.PROD_HOST }}" \
+            "cd /var/www/pawactivity && pm2 list && bash deploy/healthcheck.sh"
