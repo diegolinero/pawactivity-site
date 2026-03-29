@@ -1,7 +1,7 @@
 const navItems = [
   { label: 'Cómo funciona', href: '#como-funciona' },
+  { label: 'Producto', href: '#producto' },
   { label: 'Actividad', href: '#actividad' },
-  { label: 'App', href: '#app' },
   { label: 'FAQ', href: '#faq' },
 ];
 
@@ -13,7 +13,6 @@ export function SiteHeader() {
           <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-orange-500 text-sm font-bold text-white">
             PA
           </span>
-
           <span>
             <span className="block text-lg font-semibold tracking-tight">PawActivity</span>
             <span className="block text-xs text-slate-500">Actividad inteligente para perros</span>
@@ -35,12 +34,11 @@ export function SiteHeader() {
           >
             Iniciar sesión
           </a>
-
           <a
             href="#cta"
             className="inline-flex rounded-full bg-orange-500 px-5 py-2 text-sm font-semibold text-white transition hover:bg-orange-600"
           >
-            Solicitar acceso
+            Solicitar demo
           </a>
         </div>
       </div>

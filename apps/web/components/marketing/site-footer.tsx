@@ -3,8 +3,8 @@ const footerGroups = [
     title: 'Producto',
     links: [
       { label: 'Cómo funciona', href: '#como-funciona' },
+      { label: 'Producto', href: '#producto' },
       { label: 'Actividad', href: '#actividad' },
-      { label: 'Aplicación', href: '#app' },
     ],
   },
   {
@@ -18,7 +18,7 @@ const footerGroups = [
     title: 'Contacto',
     links: [
       { label: 'contacto@pawactivity.com', href: 'mailto:contacto@pawactivity.com' },
-      { label: 'Instagram', href: '#' },
+      { label: 'Piloto comercial', href: 'mailto:contacto@pawactivity.com?subject=Piloto%20PawActivity' },
     ],
   },
 ];
@@ -27,7 +27,7 @@ export function SiteFooter() {
   return (
     <footer className="border-t border-slate-200 bg-white">
       <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-        <div className="grid gap-10 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
+        <div className="grid gap-10 lg:grid-cols-[1.5fr_1fr_1fr_1fr]">
           <div>
             <div className="flex items-center gap-3">
               <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-orange-500 text-sm font-bold text-white">
@@ -40,7 +40,7 @@ export function SiteFooter() {
             </div>
 
             <p className="mt-4 max-w-sm text-sm leading-7 text-slate-600">
-              PawActivity conecta dispositivo, app y plataforma web para construir una experiencia real de seguimiento de actividad canina.
+              PawActivity conecta dispositivo, app y plataforma web para convertir movimiento en datos útiles, claros y accionables.
             </p>
           </div>
 

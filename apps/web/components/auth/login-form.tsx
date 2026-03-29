@@ -1,67 +1,47 @@
 'use client';
 
-import Link from 'next/link';
 import { useState } from 'react';
-import { useForm } from 'react-hook-form';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { z } from 'zod';
-import { Button } from '@/components/ui/button';
-import { loginSchema } from '@pawactivity/validation';
-
-type LoginFormValues = z.infer<typeof loginSchema>;
 
 export function LoginForm() {
-  const [error, setError] = useState<string | null>(null);
-  const [loading, setLoading] = useState(false);
-  const { register, handleSubmit, formState: { errors } } = useForm<LoginFormValues>({
-    resolver: zodResolver(loginSchema),
-    defaultValues: {
-      email: '',
-      password: '',
-    },
-  });
-
-  const onSubmit = handleSubmit(async (values) => {
-    setLoading(true);
-    setError(null);
-
-    const response = await fetch('/login/actions', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(values),
-    });
-
-    if (!response.ok) {
-      setError('No pudimos iniciar sesión con esas credenciales.');
-      setLoading(false);
-      return;
-    }
-
-    window.location.href = '/dashboard';
-  });
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
 
   return (
-    <form onSubmit={onSubmit} className="space-y-4">
-      <div>
-        <label className="mb-1 block text-sm font-medium text-slate-700">Email</label>
-        <input className="w-full rounded-xl border border-slate-300 px-4 py-3" type="email" {...register('email')} />
-        {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email.message}</p>}
+    <form className="space-y-4">
+      <div className="space-y-2">
+        <label htmlFor="email" className="text-sm font-medium text-slate-700">
+          Correo electrónico
+        </label>
+        <input
+          id="email"
+          type="email"
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+          className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-cyan-500"
+          placeholder="tu@email.com"
+        />
       </div>
-      <div>
-        <label className="mb-1 block text-sm font-medium text-slate-700">Contraseña</label>
-        <input className="w-full rounded-xl border border-slate-300 px-4 py-3" type="password" {...register('password')} />
-        {errors.password && <p className="mt-1 text-sm text-red-600">{errors.password.message}</p>}
+
+      <div className="space-y-2">
+        <label htmlFor="password" className="text-sm font-medium text-slate-700">
+          Contraseña
+        </label>
+        <input
+          id="password"
+          type="password"
+          value={password}
+          onChange={(event) => setPassword(event.target.value)}
+          className="w-full rounded-xl border border-slate-300 bg-white px-4 py-3 text-slate-900 outline-none transition focus:border-cyan-500"
+          placeholder="••••••••"
+        />
       </div>
-      {error && <p className="text-sm text-red-600">{error}</p>}
-      <Button className="w-full" disabled={loading}>
-        {loading ? 'Ingresando...' : 'Iniciar sesión'}
-      </Button>
-      <p className="text-sm text-slate-600">
-        ¿No tienes cuenta?{' '}
-        <Link href="/register" className="font-medium text-brand">
-          Crear cuenta
-        </Link>
-      </p>
+
+      <button
+        type="submit"
+        className="inline-flex w-full items-center justify-center rounded-xl bg-cyan-500 px-4 py-3 text-sm font-semibold text-slate-950 transition hover:bg-cyan-400"
+      >
+        Iniciar sesión
+      </button>
     </form>
   );
 }
