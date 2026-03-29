@@ -8,22 +8,22 @@ const howItWorks = [
   {
     title: 'Sensor',
     description:
-      'Un módulo ligero registra movimiento y niveles de actividad durante todo el día, sin depender de sesiones aisladas.',
+      'Un módulo ligero acompaña la rutina diaria y capta actividad de forma continua, sin depender de momentos aislados.',
   },
   {
     title: 'Detección',
     description:
-      'El sistema identifica patrones de rutina y variaciones relevantes para diferenciar comportamiento normal de cambios sostenidos.',
+      'PawActivity identifica patrones de comportamiento y resalta variaciones que merecen seguimiento.',
   },
   {
     title: 'Sync',
     description:
-      'La información se sincroniza de forma continua para mantener trazabilidad diaria y comparar semanas con contexto real.',
+      'La información se sincroniza para mantener una lectura diaria consistente y comparaciones claras por semana.',
   },
   {
     title: 'Plataforma',
     description:
-      'PawActivity transforma señales en información accionable: qué cambió, cuándo cambió y qué impacto tiene en la rutina.',
+      'La plataforma convierte datos en interpretación útil: qué cambió, cuándo cambió y cómo afecta la rutina.',
   },
 ];
 
@@ -44,8 +44,8 @@ const audiences = [
     description: 'Para dar seguimiento objetivo entre sesiones y ajustar planes con evidencia de comportamiento.',
   },
   {
-    title: 'Uso profesional y validación',
-    description: 'Para equipos que necesitan consistencia en el monitoreo de actividad y trazabilidad de cambios.',
+    title: 'Uso profesional',
+    description: 'Para equipos que necesitan monitoreo consistente, historial claro y seguimiento de cambios en el tiempo.',
   },
 ];
 
@@ -81,6 +81,12 @@ export default function HomePage() {
             <div className="mt-8 flex flex-wrap gap-3">
               <Button>Solicitar información</Button>
               <Link
+                href="https://app.pawactivity.com"
+                className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
+              >
+                Iniciar sesión
+              </Link>
+              <Link
                 href="#contacto"
                 className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
               >
@@ -91,9 +97,9 @@ export default function HomePage() {
           <Card className="p-6 sm:p-8">
             <p className="text-sm font-semibold uppercase tracking-wide text-brand">Visión operativa diaria</p>
             <ul className="mt-4 space-y-4 text-sm text-slate-700">
-              <li>• Lectura continua de actividad para evitar decisiones basadas en momentos aislados.</li>
-              <li>• Señales comparables por día y semana para entender evolución real.</li>
-              <li>• Detección temprana de cambios de rutina y comportamiento.</li>
+              <li>• Lectura continua para entender cómo se comporta tu perro durante el día completo.</li>
+              <li>• Comparación por día y semana para interpretar evolución de forma simple.</li>
+              <li>• Alertas de cambios de rutina para actuar con más contexto.</li>
             </ul>
           </Card>
         </div>
@@ -172,10 +178,14 @@ export default function HomePage() {
       </section>
 
       <section className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
-        <h2 className="text-3xl font-bold tracking-tight text-slate-950">PawActivity vs trackers tradicionales</h2>
+        <h2 className="text-3xl font-bold tracking-tight text-slate-950">PawActivity vs soluciones tradicionales</h2>
+        <p className="mt-4 max-w-3xl text-slate-600">
+          La diferencia clave es el enfoque: no solo ubicación, no solo métricas, no solo alertas. PawActivity está
+          diseñado para comprender actividad y comportamiento.
+        </p>
         <div className="mt-8 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
           <div className="grid grid-cols-2 border-b border-slate-200 bg-slate-100 text-sm font-semibold text-slate-700">
-            <p className="px-6 py-4">Trackers tradicionales</p>
+            <p className="px-6 py-4">Soluciones tradicionales</p>
             <p className="px-6 py-4">PawActivity</p>
           </div>
           {comparisons.map((row) => (
@@ -189,23 +199,27 @@ export default function HomePage() {
 
       <section className="border-y border-slate-200 bg-white py-16 sm:py-20">
         <div className="mx-auto max-w-6xl px-6">
-          <h2 className="text-3xl font-bold tracking-tight text-slate-950">Producto real, diseñado para operación continua</h2>
+          <h2 className="text-3xl font-bold tracking-tight text-slate-950">Un producto listo para uso diario</h2>
           <p className="mt-4 max-w-3xl text-slate-600">
-            PawActivity integra hardware y plataforma para habilitar seguimiento confiable, con enfoque en lectura de
-            actividad y evolución del comportamiento en el tiempo.
+            PawActivity integra sensor y plataforma en una experiencia coherente: instalación limpia, uso simple y
+            lectura clara de la actividad real del perro.
           </p>
           <div className="mt-8 grid gap-5 md:grid-cols-3">
-            {['device-module', 'collar-product', 'device-closeup'].map((imageName) => (
-              <Card key={imageName} className="overflow-hidden">
+            {[
+              { imageName: 'device-module', label: 'Módulo compacto y discreto para uso diario' },
+              { imageName: 'collar-product', label: 'Integración limpia con el collar' },
+              { imageName: 'device-closeup', label: 'Diseño robusto para seguimiento continuo' },
+            ].map((item) => (
+              <Card key={item.imageName} className="overflow-hidden">
                 <Image
-                  src={`/images/${imageName}.jpg`}
-                  alt={imageName}
+                  src={`/images/${item.imageName}.jpg`}
+                  alt={item.label}
                   width={640}
                   height={420}
                   className="h-52 w-full bg-slate-100 object-cover"
                 />
                 <div className="p-4">
-                  <p className="text-sm font-medium text-slate-800">{imageName}</p>
+                  <p className="text-sm font-medium text-slate-800">{item.label}</p>
                 </div>
               </Card>
             ))}
