@@ -2,6 +2,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { Button } from '@/components/ui/button';
 import { Card } from '@/components/ui/card';
+import { ContactForm } from '@/components/marketing/contact-form';
 
 const howItWorks = [
   {
@@ -62,42 +63,6 @@ const comparisons = [
     pawactivity: 'Seguimiento continuo para identificar tendencias y desviaciones.',
   },
 ];
-
-function ContactForm() {
-  return (
-    <Card className="p-6 sm:p-8">
-      <form className="space-y-4">
-        <div>
-          <label htmlFor="name" className="mb-2 block text-sm font-medium text-slate-700">
-            Nombre
-          </label>
-          <input id="name" name="name" type="text" className="input" placeholder="Tu nombre" required />
-        </div>
-        <div>
-          <label htmlFor="email" className="mb-2 block text-sm font-medium text-slate-700">
-            Correo
-          </label>
-          <input id="email" name="email" type="email" className="input" placeholder="tu@correo.com" required />
-        </div>
-        <div>
-          <label htmlFor="message" className="mb-2 block text-sm font-medium text-slate-700">
-            ¿Qué te gustaría conocer?
-          </label>
-          <textarea
-            id="message"
-            name="message"
-            className="input min-h-28"
-            placeholder="Cuéntanos tu contexto para enviarte información relevante"
-            required
-          />
-        </div>
-        <Button type="submit" className="w-full sm:w-auto">
-          Solicitar información
-        </Button>
-      </form>
-    </Card>
-  );
-}
 
 export default function HomePage() {
   return (
@@ -248,14 +213,17 @@ export default function HomePage() {
         </div>
       </section>
 
-      <section id="contacto" className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
-        <div className="mb-8 max-w-3xl">
-          <h2 className="text-3xl font-bold tracking-tight text-slate-950">¿Quieres conocer PawActivity en detalle?</h2>
-          <p className="mt-4 text-slate-600">
-            Cuéntanos tu caso y te compartimos información sobre implementación, cobertura funcional y próximos pasos.
-          </p>
+      <section id="cta" className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
+        <span id="contacto" className="sr-only">Sección de contacto</span>
+        <div className="grid gap-8 lg:grid-cols-[1fr_1.1fr] lg:items-start">
+          <div className="max-w-2xl">
+            <h2 className="text-3xl font-bold tracking-tight text-slate-950">Solicita información sobre PawActivity</h2>
+            <p className="mt-4 text-slate-600">
+              Si quieres más información sobre PawActivity o resolver dudas sobre el producto, completa el formulario y te contactaremos.
+            </p>
+          </div>
+          <ContactForm />
         </div>
-        <ContactForm />
       </section>
     </main>
   );
