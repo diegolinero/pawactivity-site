@@ -6,24 +6,24 @@ import { ContactForm } from '@/components/marketing/contact-form';
 
 const howItWorks = [
   {
-    title: 'Sensor',
+    title: 'Captura continua',
     description:
-      'Un módulo ligero acompaña la rutina diaria y capta actividad de forma continua, sin depender de momentos aislados.',
+      'Un dispositivo cómodo y resistente registra la actividad durante todo el día, sin interrumpir la rutina.',
   },
   {
-    title: 'Detección',
+    title: 'Lectura inteligente',
     description:
-      'PawActivity identifica patrones de comportamiento y resalta variaciones que merecen seguimiento.',
+      'PawActivity interpreta patrones de comportamiento y detecta variaciones que requieren atención.',
   },
   {
-    title: 'Sync',
+    title: 'Contexto diario',
     description:
-      'La información se sincroniza para mantener una lectura diaria consistente y comparaciones claras por semana.',
+      'Cada día se muestra con contexto: niveles de actividad, cambios respecto a su rutina y evolución semanal.',
   },
   {
-    title: 'Plataforma',
+    title: 'Acción clara',
     description:
-      'La plataforma convierte datos en interpretación útil: qué cambió, cuándo cambió y cómo afecta la rutina.',
+      'Recibes información clara para decidir mejor: qué cambió, cuándo cambió y qué seguimiento conviene hacer.',
   },
 ];
 
@@ -75,8 +75,8 @@ export default function HomePage() {
               Entiende realmente la actividad y el comportamiento de tu perro
             </h1>
             <p className="mt-6 max-w-2xl text-lg text-slate-600">
-              PawActivity transforma movimiento en información útil para visualizar rutina, detectar cambios y tomar
-              decisiones con claridad.
+              Un sistema diseñado para entender la actividad real de tu perro, detectar cambios en su comportamiento y
+              ayudarte a tomar decisiones con contexto.
             </p>
             <div className="mt-8 flex flex-wrap gap-3">
               <Button>Solicitar información</Button>
@@ -95,11 +95,11 @@ export default function HomePage() {
             </div>
           </div>
           <Card className="p-6 sm:p-8">
-            <p className="text-sm font-semibold uppercase tracking-wide text-brand">Visión operativa diaria</p>
+            <p className="text-sm font-semibold uppercase tracking-wide text-brand">Comprensión diaria de actividad</p>
             <ul className="mt-4 space-y-4 text-sm text-slate-700">
-              <li>• Lectura continua para entender cómo se comporta tu perro durante el día completo.</li>
-              <li>• Comparación por día y semana para interpretar evolución de forma simple.</li>
-              <li>• Alertas de cambios de rutina para actuar con más contexto.</li>
+              <li>• Comprende su rutina real y cómo cambia entre días de semana y fines de semana.</li>
+              <li>• Identifica desviaciones tempranas para actuar antes de que el cambio sea evidente.</li>
+              <li>• Interpreta cada jornada con contexto, no solo con métricas aisladas.</li>
             </ul>
           </Card>
         </div>
@@ -107,21 +107,21 @@ export default function HomePage() {
 
       <section className="border-y border-slate-200 bg-white py-16 sm:py-20">
         <div className="mx-auto max-w-6xl px-6">
-          <h2 className="text-3xl font-bold tracking-tight text-slate-950">El problema no es la falta de datos</h2>
+          <h2 className="text-3xl font-bold tracking-tight text-slate-950">El tracking ya está resuelto</h2>
           <div className="mt-8 grid gap-5 md:grid-cols-3">
             <Card className="p-6">
               <p className="text-base text-slate-700">
-                Muchos dispositivos muestran números, pero no explican qué significan para la rutina real del perro.
+                Hoy existen múltiples opciones para ver ubicación. El desafío real está en entender comportamiento.
               </p>
             </Card>
             <Card className="p-6">
               <p className="text-base text-slate-700">
-                Detectar cambios de comportamiento a tiempo es difícil cuando no hay una lectura continua con contexto.
+                Sin contexto diario, es difícil distinguir un día normal de una señal de cambio en su rutina.
               </p>
             </Card>
             <Card className="p-6">
               <p className="text-base text-slate-700">
-                Tener métricas no basta: el reto está en interpretar actividad diaria de forma consistente y útil.
+                PawActivity convierte actividad en comprensión accionable para seguimiento continuo y decisiones mejores.
               </p>
             </Card>
           </div>
@@ -130,10 +130,10 @@ export default function HomePage() {
 
       <section className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
         <Card className="border-brand/20 bg-brand-soft/40 p-8 sm:p-10">
-          <h2 className="text-3xl font-bold tracking-tight text-slate-950">No somos un GPS, y eso es intencional</h2>
+          <h2 className="text-3xl font-bold tracking-tight text-slate-950">No es otro tracker más</h2>
           <p className="mt-5 max-w-3xl text-lg text-slate-700">
-            La ubicación ya está resuelta con GPS, AirTag y otras soluciones. PawActivity no compite en tracking:
-            nuestro foco es entender comportamiento, rutina y cambios en la actividad diaria.
+            La ubicación ya está resuelta con GPS y AirTag. PawActivity se enfoca en algo distinto: entender la
+            actividad real y el comportamiento de tu perro para saber cuándo su rutina cambia de verdad.
           </p>
         </Card>
       </section>
@@ -153,7 +153,7 @@ export default function HomePage() {
       </section>
 
       <section className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
-        <h2 className="text-3xl font-bold tracking-tight text-slate-950">Resultados que importan</h2>
+        <h2 className="text-3xl font-bold tracking-tight text-slate-950">Resultados que importan en el día a día</h2>
         <div className="mt-8 grid gap-4 sm:grid-cols-2">
           {outcomes.map((item) => (
             <Card key={item} className="p-6">
@@ -178,10 +178,10 @@ export default function HomePage() {
       </section>
 
       <section className="mx-auto max-w-6xl px-6 py-16 sm:py-20">
-        <h2 className="text-3xl font-bold tracking-tight text-slate-950">PawActivity vs soluciones tradicionales</h2>
+        <h2 className="text-3xl font-bold tracking-tight text-slate-950">PawActivity vs soluciones de tracking</h2>
         <p className="mt-4 max-w-3xl text-slate-600">
-          La diferencia clave es el enfoque: no solo ubicación, no solo métricas, no solo alertas. PawActivity está
-          diseñado para comprender actividad y comportamiento.
+          La diferencia clave es el enfoque: pasar de solo localizar a comprender actividad, rutina y comportamiento
+          con contexto continuo.
         </p>
         <div className="mt-8 overflow-hidden rounded-2xl border border-slate-200 bg-white shadow-sm">
           <div className="grid grid-cols-2 border-b border-slate-200 bg-slate-100 text-sm font-semibold text-slate-700">
@@ -199,16 +199,16 @@ export default function HomePage() {
 
       <section className="border-y border-slate-200 bg-white py-16 sm:py-20">
         <div className="mx-auto max-w-6xl px-6">
-          <h2 className="text-3xl font-bold tracking-tight text-slate-950">Un producto listo para uso diario</h2>
+          <h2 className="text-3xl font-bold tracking-tight text-slate-950">Un sistema completo para uso continuo</h2>
           <p className="mt-4 max-w-3xl text-slate-600">
-            PawActivity integra sensor y plataforma en una experiencia coherente: instalación limpia, uso simple y
-            lectura clara de la actividad real del perro.
+            PawActivity combina hardware y app en una sola experiencia: diseño pensado para uso continuo, integración
+            completa y lectura clara de la actividad real de tu perro.
           </p>
           <div className="mt-8 grid gap-5 md:grid-cols-3">
             {[
-              { imageName: 'device-module', label: 'Módulo compacto y discreto para uso diario' },
-              { imageName: 'collar-product', label: 'Integración limpia con el collar' },
-              { imageName: 'device-closeup', label: 'Diseño robusto para seguimiento continuo' },
+              { imageName: 'device-module', label: 'Diseño cómodo y discreto para uso diario' },
+              { imageName: 'collar-product', label: 'Integración fluida entre dispositivo y aplicación' },
+              { imageName: 'device-closeup', label: 'Sistema robusto para monitoreo continuo' },
             ].map((item) => (
               <Card key={item.imageName} className="overflow-hidden">
                 <Image
