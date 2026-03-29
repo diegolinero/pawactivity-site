@@ -81,6 +81,12 @@ export default function HomePage() {
             <div className="mt-8 flex flex-wrap gap-3">
               <Button>Solicitar información</Button>
               <Link
+                href="https://app.pawactivity.com"
+                className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
+              >
+                Iniciar sesión
+              </Link>
+              <Link
                 href="#contacto"
                 className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-4 py-3 text-sm font-medium text-slate-700 transition hover:bg-slate-100"
               >
