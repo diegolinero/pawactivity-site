@@ -1,8 +1,8 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import { Button } from '@/components/ui/button';
-import { Card } from '@/components/ui/card';
-import { ContactForm } from '@/components/marketing/contact-form';
+import { Button } from '../components/ui/button';
+import { Card } from '../components/ui/card';
+import { ContactForm } from '../components/marketing/contact-form';
 
 const howItWorks = [
   {
