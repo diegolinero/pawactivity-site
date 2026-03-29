@@ -17,8 +17,8 @@ const footerGroups = [
   {
     title: 'Contacto',
     links: [
-      { label: 'contacto@pawactivity.com', href: 'mailto:contacto@pawactivity.com' },
-      { label: 'Piloto comercial', href: 'mailto:contacto@pawactivity.com?subject=Piloto%20PawActivity' },
+      { label: 'info@pawactivity.com', href: 'mailto:info@pawactivity.com' },
+      { label: 'Solicitar información', href: '#cta' },
     ],
   },
 ];

@@ -38,7 +38,7 @@ export function SiteHeader() {
             href="#cta"
             className="inline-flex rounded-full bg-orange-500 px-5 py-2 text-sm font-semibold text-white transition hover:bg-orange-600"
           >
-            Solicitar demo
+            Contáctanos
           </a>
         </div>
       </div>

@@ -1,4 +1,5 @@
 import Image from 'next/image';
+import { ContactForm } from '@/components/marketing/contact-form';
 import { SiteFooter } from '@/components/marketing/site-footer';
 import { SiteHeader } from '@/components/marketing/site-header';
 
@@ -21,21 +22,39 @@ const steps = [
   },
 ];
 
-const pillars = [
+const reasons = [
   {
     title: 'Producto físico real',
     description:
-      'PawActivity ya cuenta con un dispositivo identificable, integrable al collar y con lenguaje visual propio.',
+      'PawActivity ya cuenta con un dispositivo visible, reconocible y coherente con una propuesta comercial seria.',
   },
   {
-    title: 'Plataforma conectada',
+    title: 'Arquitectura conectada',
     description:
-      'El valor aparece cuando el hardware, la app y la visualización web se entienden como un solo ecosistema.',
+      'Dispositivo, app y plataforma web trabajan como partes de un mismo sistema, no como piezas aisladas.',
   },
   {
     title: 'Foco correcto',
     description:
       'La propuesta se centra en actividad real del perro, evitando promesas genéricas que no representan el producto.',
+  },
+];
+
+const highlights = [
+  {
+    title: 'Caminar',
+    description:
+      'Permite construir resúmenes diarios y entender actividad moderada de forma más útil.',
+  },
+  {
+    title: 'Correr',
+    description:
+      'Ayuda a registrar momentos de mayor intensidad y observar cambios en rutina y ejercicio.',
+  },
+  {
+    title: 'Reposo',
+    description:
+      'Completa la lectura del día incorporando pausas y periodos de baja actividad.',
   },
 ];
 
@@ -62,19 +81,19 @@ export default function HomePage() {
     <main className="min-h-screen bg-[#f7f7f5] text-slate-900">
       <SiteHeader />
 
-      <section className="border-b border-slate-200 bg-[radial-gradient(circle_at_top_left,_rgba(249,115,22,0.14),_transparent_30%),linear-gradient(to_bottom,_#fff,_#f7f7f5)]">
+      <section className="border-b border-slate-200 bg-[radial-gradient(circle_at_top_left,_rgba(249,115,22,0.15),_transparent_28%),linear-gradient(to_bottom,_#fff,_#f7f7f5)]">
         <div className="mx-auto grid max-w-7xl gap-12 px-4 py-12 sm:px-6 sm:py-16 lg:grid-cols-2 lg:items-center lg:px-8 lg:py-20">
           <div>
             <div className="inline-flex rounded-full border border-orange-200 bg-orange-50 px-4 py-2 text-sm text-orange-700">
-              PawActivity · actividad inteligente para perros
+              PawActivity · monitoreo inteligente de actividad canina
             </div>
 
             <h1 className="mt-6 max-w-2xl text-4xl font-semibold tracking-tight text-slate-950 sm:text-5xl lg:text-6xl">
-              Datos reales para entender la actividad de tu perro
+              Convierte movimiento en información útil para entender a tu perro
             </h1>
 
             <p className="mt-6 max-w-2xl text-base leading-8 text-slate-600 sm:text-lg">
-              PawActivity conecta dispositivo, app y plataforma para transformar movimiento en información útil, clara y lista para seguimiento continuo.
+              PawActivity conecta un dispositivo inteligente, una app móvil y una plataforma web para transformar actividad en datos claros, accionables y listos para seguimiento continuo.
             </p>
 
             <div className="mt-8 flex flex-col gap-3 sm:flex-row">
@@ -82,13 +101,13 @@ export default function HomePage() {
                 href="#cta"
                 className="inline-flex items-center justify-center rounded-xl bg-orange-500 px-6 py-3 text-sm font-semibold text-white transition hover:bg-orange-600"
               >
-                Solicitar demo
+                Solicitar información
               </a>
               <a
-                href="/login"
+                href="#producto"
                 className="inline-flex items-center justify-center rounded-xl border border-slate-300 bg-white px-6 py-3 text-sm font-semibold text-slate-800 transition hover:border-slate-400"
               >
-                Ir al login
+                Ver producto
               </a>
             </div>
 
@@ -97,7 +116,7 @@ export default function HomePage() {
                 <p className="text-sm text-slate-500">Estado detectado</p>
                 <p className="mt-3 text-2xl font-semibold text-orange-600">Caminar</p>
                 <p className="mt-2 text-sm leading-6 text-slate-600">
-                  Clasificación continua y legible.
+                  Lectura continua de actividad.
                 </p>
               </div>
 
@@ -142,7 +161,7 @@ export default function HomePage() {
               Un flujo simple, sólido y creíble
             </h2>
             <p className="mt-4 text-base leading-8 text-slate-600 sm:text-lg">
-              PawActivity se apoya en hardware real, sincronización móvil y visualización útil para construir valor desde el primer uso.
+              PawActivity une captura de movimiento, detección inteligente, sincronización móvil y visualización web en una sola experiencia.
             </p>
           </div>
 
@@ -182,14 +201,14 @@ export default function HomePage() {
               Un dispositivo real con identidad propia
             </h2>
             <p className="mt-4 text-base leading-8 text-slate-600 sm:text-lg">
-              La presencia del hardware cambia completamente la percepción del proyecto: PawActivity deja de verse como concepto y pasa a presentarse como tecnología de producto.
+              La presencia del hardware cambia por completo la percepción del proyecto: PawActivity deja de verse como concepto y pasa a presentarse como una propuesta tecnológica concreta.
             </p>
 
             <div className="mt-8 grid gap-4">
-              {pillars.map((pillar) => (
-                <article key={pillar.title} className="rounded-3xl border border-slate-200 bg-white p-5">
-                  <h3 className="text-lg font-semibold text-slate-950">{pillar.title}</h3>
-                  <p className="mt-2 text-sm leading-7 text-slate-600">{pillar.description}</p>
+              {reasons.map((reason) => (
+                <article key={reason.title} className="rounded-3xl border border-slate-200 bg-white p-5">
+                  <h3 className="text-lg font-semibold text-slate-950">{reason.title}</h3>
+                  <p className="mt-2 text-sm leading-7 text-slate-600">{reason.description}</p>
                 </article>
               ))}
             </div>
@@ -201,14 +220,23 @@ export default function HomePage() {
         <div className="mx-auto grid max-w-7xl gap-12 px-4 py-16 sm:px-6 lg:grid-cols-2 lg:items-center lg:px-8">
           <div>
             <span className="inline-flex rounded-full border border-slate-200 bg-slate-50 px-4 py-1 text-sm text-slate-600">
-              Collar
+              Actividad
             </span>
             <h2 className="mt-4 text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">
-              Integración física coherente con el uso real
+              Datos más útiles que una landing llena de promesas vacías
             </h2>
             <p className="mt-4 text-base leading-8 text-slate-600 sm:text-lg">
-              El sistema no solo debe funcionar: también debe verse bien montado, consistente y listo para una presentación comercial seria.
+              PawActivity se enfoca en actividad real del perro y en una lectura comprensible, en vez de prometer funciones genéricas que hoy no son el corazón del producto.
             </p>
+
+            <div className="mt-8 grid gap-4">
+              {highlights.map((item) => (
+                <article key={item.title} className="rounded-3xl border border-slate-200 bg-[#fffaf5] p-5">
+                  <h3 className="text-lg font-semibold text-slate-950">{item.title}</h3>
+                  <p className="mt-2 text-sm leading-7 text-slate-600">{item.description}</p>
+                </article>
+              ))}
+            </div>
           </div>
 
           <div className="overflow-hidden rounded-[2rem] border border-slate-200 bg-white shadow-[0_20px_60px_rgba(15,23,42,0.08)]">
@@ -240,10 +268,10 @@ export default function HomePage() {
               Presentación
             </span>
             <h2 className="mt-4 text-3xl font-semibold tracking-tight text-slate-950 sm:text-4xl">
-              Una imagen visual mucho más premium
+              Una presencia visual más premium y comercial
             </h2>
             <p className="mt-4 text-base leading-8 text-slate-600 sm:text-lg">
-              El acabado visual, el branding y el lenguaje del dispositivo ayudan a posicionar PawActivity como una propuesta tecnológica seria y diferenciable.
+              El branding, el acabado del dispositivo y la coherencia visual ayudan a posicionar PawActivity como una propuesta seria, diferenciable y lista para crecer comercialmente.
             </p>
 
             <div className="mt-8 grid gap-4 sm:grid-cols-2">
@@ -286,28 +314,26 @@ export default function HomePage() {
       </section>
 
       <section id="cta" className="bg-orange-500">
-        <div className="mx-auto max-w-5xl px-4 py-16 text-center sm:px-6 lg:px-8">
-          <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
-            PawActivity está listo para demos, validación y presentación comercial
-          </h2>
-          <p className="mx-auto mt-4 max-w-2xl text-base leading-8 text-orange-50 sm:text-lg">
-            Con identidad visual propia, hardware real y una base de plataforma ya construida, la web ya puede dejar la etapa MVP y pasar a una presentación mucho más seria.
-          </p>
+        <div className="mx-auto grid max-w-7xl gap-10 px-4 py-16 sm:px-6 lg:grid-cols-[0.9fr_1.1fr] lg:items-start lg:px-8">
+          <div className="text-left text-white">
+            <p className="text-sm font-semibold uppercase tracking-[0.2em] text-orange-100">
+              Contáctanos
+            </p>
+            <h2 className="mt-4 text-3xl font-semibold tracking-tight sm:text-4xl">
+              Solicita información sobre PawActivity
+            </h2>
+            <p className="mt-4 max-w-xl text-base leading-8 text-orange-50 sm:text-lg">
+              Si quieres más información sobre PawActivity, una posible implementación o resolver dudas sobre el producto, completa el formulario y te contactaremos.
+            </p>
 
-          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
-            <a
-              href="/login"
-              className="inline-flex items-center justify-center rounded-xl bg-white px-6 py-3 text-sm font-semibold text-orange-600 transition hover:bg-orange-50"
-            >
-              Acceso privado
-            </a>
-            <a
-              href="mailto:contacto@pawactivity.com"
-              className="inline-flex items-center justify-center rounded-xl border border-white/40 px-6 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
-            >
-              Solicitar contacto
-            </a>
+            <div className="mt-8 space-y-3 text-sm text-orange-50">
+              <p>• Consultas sobre el producto</p>
+              <p>• Implementaciones y validación</p>
+              <p>• Información comercial general</p>
+            </div>
           </div>
+
+          <ContactForm />
         </div>
       </section>
 
